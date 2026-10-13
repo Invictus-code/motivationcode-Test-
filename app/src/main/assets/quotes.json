@@ -1,0 +1,103 @@
+[
+  {"id": "goethe-wanderjahre-tun", "text": "Es ist nicht genug, zu wissen, man muss auch anwenden; es ist nicht genug, zu wollen, man muss auch tun.", "author": "Johann Wolfgang von Goethe", "source": "Wilhelm Meisters Wanderjahre", "categories": ["motivation", "weisheit"]},
+  {"id": "goethe-faust-streben", "text": "Wer immer strebend sich bemüht, den können wir erlösen.", "author": "Johann Wolfgang von Goethe", "source": "Faust II", "categories": ["durchhalten", "motivation"]},
+  {"id": "goethe-erinnerung", "text": "Willst du immer weiter schweifen? Sieh, das Gute liegt so nah. Lerne nur das Glück ergreifen, denn das Glück ist immer da.", "author": "Johann Wolfgang von Goethe", "source": "Gedicht „Erinnerung“", "categories": ["glueck", "gelassenheit"]},
+  {"id": "goethe-goettliche", "text": "Edel sei der Mensch, hilfreich und gut!", "author": "Johann Wolfgang von Goethe", "source": "Gedicht „Das Göttliche“", "categories": ["weisheit", "liebe"]},
+  {"id": "goethe-faust-irrt", "text": "Es irrt der Mensch, solang er strebt.", "author": "Johann Wolfgang von Goethe", "source": "Faust I, Prolog im Himmel", "categories": ["durchhalten", "selbstvertrauen"]},
+  {"id": "goethe-faust-taten", "text": "Der Worte sind genug gewechselt, lasst mich auch endlich Taten sehn!", "author": "Johann Wolfgang von Goethe", "source": "Faust I, Vorspiel auf dem Theater", "categories": ["motivation"]},
+  {"id": "goethe-faust-theorie", "text": "Grau, teurer Freund, ist alle Theorie, und grün des Lebens goldner Baum.", "author": "Johann Wolfgang von Goethe", "source": "Faust I", "categories": ["motivation", "weisheit"]},
+  {"id": "goethe-faust-erbe", "text": "Was du ererbt von deinen Vätern hast, erwirb es, um es zu besitzen.", "author": "Johann Wolfgang von Goethe", "source": "Faust I", "categories": ["weisheit"]},
+  {"id": "goethe-faust-drange", "text": "Ein guter Mensch in seinem dunklen Drange ist sich des rechten Weges wohl bewusst.", "author": "Johann Wolfgang von Goethe", "source": "Faust I, Prolog im Himmel", "categories": ["selbstvertrauen"]},
+  {"id": "goethe-schoene-tage", "text": "Alles in der Welt lässt sich ertragen, nur nicht eine Reihe von schönen Tagen.", "author": "Johann Wolfgang von Goethe", "source": "Sprichwörtlich", "categories": ["glueck"]},
+
+  {"id": "schiller-tell-meister", "text": "Früh übt sich, was ein Meister werden will.", "author": "Friedrich Schiller", "source": "Wilhelm Tell", "categories": ["motivation"]},
+  {"id": "schiller-tell-starke", "text": "Der Starke ist am mächtigsten allein.", "author": "Friedrich Schiller", "source": "Wilhelm Tell", "categories": ["selbstvertrauen"]},
+  {"id": "schiller-tell-bedenkt", "text": "Wer gar zu viel bedenkt, wird wenig leisten.", "author": "Friedrich Schiller", "source": "Wilhelm Tell", "categories": ["mut", "motivation"]},
+  {"id": "schiller-spielt", "text": "Der Mensch ist nur da ganz Mensch, wo er spielt.", "author": "Friedrich Schiller", "source": "Über die ästhetische Erziehung des Menschen", "categories": ["glueck", "weisheit"]},
+  {"id": "schiller-geist-koerper", "text": "Es ist der Geist, der sich den Körper baut.", "author": "Friedrich Schiller", "source": "Wallensteins Tod", "categories": ["selbstvertrauen", "weisheit"]},
+  {"id": "schiller-ernst-heiter", "text": "Ernst ist das Leben, heiter ist die Kunst.", "author": "Friedrich Schiller", "source": "Wallenstein, Prolog", "categories": ["gelassenheit"]},
+  {"id": "schiller-minute", "text": "Was man von der Minute ausgeschlagen, gibt keine Ewigkeit zurück.", "author": "Friedrich Schiller", "source": "Gedicht „Resignation“", "categories": ["motivation", "gelassenheit"]},
+  {"id": "schiller-wage-irren", "text": "Wage du, zu irren und zu träumen.", "author": "Friedrich Schiller", "source": "Gedicht „Thekla. Eine Geisterstimme“", "categories": ["mut"]},
+  {"id": "schiller-glocke", "text": "Drum prüfe, wer sich ewig bindet, ob sich das Herz zum Herzen findet!", "author": "Friedrich Schiller", "source": "Das Lied von der Glocke", "categories": ["liebe"]},
+
+  {"id": "nietzsche-staerker", "text": "Was mich nicht umbringt, macht mich stärker.", "author": "Friedrich Nietzsche", "source": "Götzen-Dämmerung", "categories": ["durchhalten"]},
+  {"id": "nietzsche-warum", "text": "Hat man sein Warum des Lebens, so verträgt man sich fast mit jedem Wie.", "author": "Friedrich Nietzsche", "source": "Götzen-Dämmerung", "categories": ["durchhalten", "motivation"]},
+  {"id": "nietzsche-chaos", "text": "Man muss noch Chaos in sich haben, um einen tanzenden Stern gebären zu können.", "author": "Friedrich Nietzsche", "source": "Also sprach Zarathustra", "categories": ["selbstvertrauen", "mut"]},
+  {"id": "nietzsche-musik", "text": "Ohne Musik wäre das Leben ein Irrtum.", "author": "Friedrich Nietzsche", "source": "Götzen-Dämmerung", "categories": ["glueck"]},
+  {"id": "nietzsche-werden", "text": "Du sollst der werden, der du bist.", "author": "Friedrich Nietzsche", "source": "Die fröhliche Wissenschaft", "categories": ["selbstvertrauen"]},
+
+  {"id": "hesse-stufen-anfang", "text": "Und jedem Anfang wohnt ein Zauber inne, der uns beschützt und der uns hilft, zu leben.", "author": "Hermann Hesse", "source": "Gedicht „Stufen“", "categories": ["mut", "motivation"]},
+  {"id": "hesse-stufen-abschied", "text": "Es muss das Herz bei jedem Lebensrufe bereit zum Abschied sein und Neubeginne.", "author": "Hermann Hesse", "source": "Gedicht „Stufen“", "categories": ["durchhalten", "mut"]},
+  {"id": "hesse-siddhartha-warten", "text": "Ich kann denken. Ich kann warten. Ich kann fasten.", "author": "Hermann Hesse", "source": "Siddhartha", "categories": ["gelassenheit", "durchhalten"]},
+  {"id": "hesse-siddhartha-weisheit", "text": "Wissen kann man mitteilen, Weisheit aber nicht.", "author": "Hermann Hesse", "source": "Siddhartha", "categories": ["weisheit"]},
+
+  {"id": "rilke-geduld", "text": "Haben Sie Geduld gegen alles Ungelöste in Ihrem Herzen und versuchen Sie, die Fragen selbst liebzuhaben.", "author": "Rainer Maria Rilke", "source": "Briefe an einen jungen Dichter (gekürzt)", "categories": ["gelassenheit", "durchhalten"]},
+  {"id": "rilke-fragen-leben", "text": "Leben Sie jetzt die Fragen.", "author": "Rainer Maria Rilke", "source": "Briefe an einen jungen Dichter", "categories": ["gelassenheit"]},
+  {"id": "rilke-geschehn", "text": "Lass dir alles geschehn: Schönheit und Schrecken. Man muss nur gehn: Kein Gefühl ist das fernste.", "author": "Rainer Maria Rilke", "source": "Das Stunden-Buch", "categories": ["mut", "durchhalten"]},
+  {"id": "rilke-ringe", "text": "Ich lebe mein Leben in wachsenden Ringen, die sich über die Dinge ziehn.", "author": "Rainer Maria Rilke", "source": "Das Stunden-Buch", "categories": ["selbstvertrauen"]},
+
+  {"id": "kant-verstand", "text": "Habe Mut, dich deines eigenen Verstandes zu bedienen!", "author": "Immanuel Kant", "source": "Beantwortung der Frage: Was ist Aufklärung?", "categories": ["mut", "weisheit"]},
+  {"id": "lessing-muessen", "text": "Kein Mensch muss müssen.", "author": "Gotthold Ephraim Lessing", "source": "Nathan der Weise", "categories": ["selbstvertrauen", "gelassenheit"]},
+  {"id": "busch-gute", "text": "Das Gute – dieser Satz steht fest – ist stets das Böse, was man lässt.", "author": "Wilhelm Busch", "source": "Die fromme Helene", "categories": ["weisheit"]},
+  {"id": "busch-ueberraschung", "text": "Stets findet Überraschung statt, da, wo man's nicht erwartet hat.", "author": "Wilhelm Busch", "source": "Plisch und Plum", "categories": ["glueck"]},
+
+  {"id": "kaestner-moral", "text": "Es gibt nichts Gutes, außer: Man tut es.", "author": "Erich Kästner", "source": "Epigramm „Moral“", "categories": ["motivation"]},
+  {"id": "kaestner-kakao", "text": "Was auch immer geschieht: Nie dürft ihr so tief sinken, von dem Kakao, durch den man euch zieht, auch noch zu trinken!", "author": "Erich Kästner", "source": "Gedicht „Was auch immer geschieht“", "categories": ["durchhalten", "selbstvertrauen"]},
+  {"id": "kaestner-neujahr", "text": "Wird's besser? Wird's schlimmer? fragt man alljährlich. Seien wir ehrlich: Leben ist immer lebensgefährlich.", "author": "Erich Kästner", "source": "Gedicht „Zum Neuen Jahr“", "categories": ["gelassenheit", "mut"]},
+
+  {"id": "ebner-nichts-weiss", "text": "Wer nichts weiß, muss alles glauben.", "author": "Marie von Ebner-Eschenbach", "source": "Aphorismen", "categories": ["weisheit"]},
+  {"id": "ebner-eigene-kraft", "text": "Wenn es einen Glauben gibt, der Berge versetzen kann, so ist es der Glaube an die eigene Kraft.", "author": "Marie von Ebner-Eschenbach", "source": "Aphorismen", "categories": ["selbstvertrauen", "mut"]},
+  {"id": "ebner-vertrauen", "text": "Vertrauen ist Mut, und Treue ist Kraft.", "author": "Marie von Ebner-Eschenbach", "source": "Aphorismen", "categories": ["liebe", "mut"]},
+  {"id": "ebner-schicksal", "text": "Nicht, was wir erleben, sondern wie wir empfinden, was wir erleben, macht unser Schicksal aus.", "author": "Marie von Ebner-Eschenbach", "source": "Aphorismen", "categories": ["gelassenheit", "glueck"]},
+
+  {"id": "lichtenberg-anders", "text": "Ich weiß nicht, ob es besser wird, wenn es anders wird; aber so viel kann ich sagen: Es muss anders werden, wenn es gut werden soll.", "author": "Georg Christoph Lichtenberg", "source": "Sudelbücher", "categories": ["mut", "motivation"]},
+  {"id": "schweitzer-leben", "text": "Ich bin Leben, das leben will, inmitten von Leben, das leben will.", "author": "Albert Schweitzer", "source": "Kultur und Ethik", "categories": ["weisheit", "liebe"]},
+  {"id": "bonhoeffer-maechte", "text": "Von guten Mächten wunderbar geborgen, erwarten wir getrost, was kommen mag.", "author": "Dietrich Bonhoeffer", "source": "Gedicht „Von guten Mächten“", "categories": ["durchhalten", "gelassenheit"]},
+  {"id": "brecht-welt", "text": "Ändere die Welt, sie braucht es.", "author": "Bertolt Brecht", "source": "Die Maßnahme", "categories": ["mut", "motivation"]},
+  {"id": "hoelderlin-rettende", "text": "Wo aber Gefahr ist, wächst das Rettende auch.", "author": "Friedrich Hölderlin", "source": "Hymne „Patmos“", "categories": ["durchhalten"]},
+  {"id": "claudius-taeglich", "text": "Ich danke Gott und freue mich wie's Kind zur Weihnachtsgabe, dass ich bin, bin! Und dass ich dich, schön menschlich Antlitz, habe.", "author": "Matthias Claudius", "source": "Gedicht „Täglich zu singen“", "categories": ["glueck", "liebe"]},
+  {"id": "eichendorff-zauberwort", "text": "Schläft ein Lied in allen Dingen, die da träumen fort und fort, und die Welt hebt an zu singen, triffst du nur das Zauberwort.", "author": "Joseph von Eichendorff", "source": "Gedicht „Wünschelrute“", "categories": ["glueck", "weisheit"]},
+  {"id": "wittgenstein-sprache", "text": "Die Grenzen meiner Sprache bedeuten die Grenzen meiner Welt.", "author": "Ludwig Wittgenstein", "source": "Tractatus logico-philosophicus", "categories": ["weisheit"]},
+  {"id": "valentin-moegen", "text": "Mögen hätt' ich schon wollen, aber dürfen hab' ich mich nicht getraut.", "author": "Karl Valentin", "categories": ["mut"]},
+  {"id": "einstein-velo", "text": "Beim Menschen ist es wie beim Velo. Nur wenn er fährt, kann er bequem die Balance halten.", "author": "Albert Einstein", "source": "Brief an seinen Sohn Eduard, 1930", "categories": ["durchhalten", "motivation"]},
+
+  {"id": "ende-momo-schritt", "text": "Man darf nie an die ganze Straße auf einmal denken, verstehst du? Man muss nur an den nächsten Schritt denken, an den nächsten Atemzug, an den nächsten Besenstrich.", "author": "Michael Ende", "source": "Momo", "categories": ["durchhalten", "gelassenheit", "motivation"]},
+  {"id": "ende-tu-was-du-willst", "text": "Tu, was du willst.", "author": "Michael Ende", "source": "Die unendliche Geschichte", "categories": ["selbstvertrauen", "mut"]},
+
+  {"id": "saint-exupery-herz", "text": "Man sieht nur mit dem Herzen gut. Das Wesentliche ist für die Augen unsichtbar.", "author": "Antoine de Saint-Exupéry", "source": "Der kleine Prinz", "translated": true, "categories": ["liebe", "weisheit"]},
+  {"id": "saint-exupery-vertraut", "text": "Du bist zeitlebens für das verantwortlich, was du dir vertraut gemacht hast.", "author": "Antoine de Saint-Exupéry", "source": "Der kleine Prinz", "translated": true, "categories": ["liebe"]},
+
+  {"id": "seneca-wagen", "text": "Nicht weil es schwer ist, wagen wir es nicht, sondern weil wir es nicht wagen, ist es schwer.", "author": "Seneca", "source": "Briefe an Lucilius", "translated": true, "categories": ["mut"]},
+  {"id": "seneca-zeit", "text": "Es ist nicht wenig Zeit, die wir haben, sondern viel, die wir nicht nutzen.", "author": "Seneca", "source": "Von der Kürze des Lebens", "translated": true, "categories": ["motivation"]},
+  {"id": "seneca-aufschieben", "text": "Während man es aufschiebt, eilt das Leben vorüber.", "author": "Seneca", "source": "Briefe an Lucilius", "translated": true, "categories": ["motivation"]},
+  {"id": "seneca-vorstellung", "text": "Wir leiden öfter in der Vorstellung als in der Wirklichkeit.", "author": "Seneca", "source": "Briefe an Lucilius", "translated": true, "categories": ["gelassenheit", "durchhalten"]},
+  {"id": "seneca-heilung", "text": "Ein Teil der Heilung ist, geheilt werden zu wollen.", "author": "Seneca", "source": "Phaedra", "translated": true, "categories": ["durchhalten"]},
+
+  {"id": "mark-aurel-gedanken", "text": "Wie deine Gedanken beschaffen sind, so wird auch deine Seele sein; denn die Seele wird von den Gedanken gefärbt.", "author": "Mark Aurel", "source": "Selbstbetrachtungen", "translated": true, "categories": ["selbstvertrauen", "gelassenheit"]},
+  {"id": "mark-aurel-sei-einer", "text": "Verliere keine Zeit mehr damit, darüber zu reden, wie ein guter Mensch sein soll. Sei einer.", "author": "Mark Aurel", "source": "Selbstbetrachtungen", "translated": true, "categories": ["motivation"]},
+  {"id": "mark-aurel-hindernis", "text": "Was dem Handeln im Weg steht, fördert das Handeln. Was im Weg steht, wird zum Weg.", "author": "Mark Aurel", "source": "Selbstbetrachtungen", "translated": true, "categories": ["durchhalten", "mut"]},
+
+  {"id": "epiktet-urteile", "text": "Nicht die Dinge selbst beunruhigen die Menschen, sondern ihre Meinungen über die Dinge.", "author": "Epiktet", "source": "Handbüchlein der Moral", "translated": true, "categories": ["gelassenheit"]},
+  {"id": "epiktet-macht", "text": "Einiges steht in unserer Macht, anderes nicht.", "author": "Epiktet", "source": "Handbüchlein der Moral", "translated": true, "categories": ["gelassenheit", "weisheit"]},
+
+  {"id": "laozi-reise", "text": "Eine Reise von tausend Meilen beginnt mit dem ersten Schritt.", "author": "Laozi", "source": "Tao Te King", "translated": true, "categories": ["motivation", "mut"]},
+  {"id": "laozi-weise", "text": "Wer andere kennt, ist klug. Wer sich selbst kennt, ist weise.", "author": "Laozi", "source": "Tao Te King", "translated": true, "categories": ["weisheit", "selbstvertrauen"]},
+  {"id": "laozi-stark", "text": "Wer andere besiegt, hat Kraft. Wer sich selbst besiegt, ist stark.", "author": "Laozi", "source": "Tao Te King", "translated": true, "categories": ["selbstvertrauen", "durchhalten"]},
+
+  {"id": "konfuzius-lernen", "text": "Lernen, ohne zu denken, ist vergeblich. Denken, ohne zu lernen, ist gefährlich.", "author": "Konfuzius", "source": "Gespräche (Lunyu)", "translated": true, "categories": ["weisheit"]},
+  {"id": "konfuzius-goldene-regel", "text": "Was du selbst nicht wünschst, das tue auch nicht anderen an.", "author": "Konfuzius", "source": "Gespräche (Lunyu)", "translated": true, "categories": ["liebe", "weisheit"]},
+
+  {"id": "einstein-fantasie", "text": "Fantasie ist wichtiger als Wissen. Wissen ist begrenzt.", "author": "Albert Einstein", "source": "Interview, 1929", "translated": true, "categories": ["mut", "weisheit"]},
+  {"id": "keller-abenteuer", "text": "Das Leben ist entweder ein waghalsiges Abenteuer oder gar nichts.", "author": "Helen Keller", "source": "Let Us Have Faith", "translated": true, "categories": ["mut"]},
+  {"id": "king-weitermachen", "text": "Wenn du nicht fliegen kannst, dann renne. Wenn du nicht rennen kannst, dann gehe. Wenn du nicht gehen kannst, dann krieche. Aber was du auch tust, du musst weitermachen.", "author": "Martin Luther King Jr.", "source": "Rede „What Is Your Life's Blueprint?“, 1967", "translated": true, "categories": ["durchhalten", "motivation"]},
+  {"id": "gandhi-wille", "text": "Stärke kommt nicht aus körperlicher Kraft. Sie entspringt einem unbeugsamen Willen.", "author": "Mahatma Gandhi", "source": "The Doctrine of the Sword, 1920", "translated": true, "categories": ["selbstvertrauen", "durchhalten"]},
+  {"id": "niebuhr-gelassenheit", "text": "Gott, gib mir die Gelassenheit, Dinge hinzunehmen, die ich nicht ändern kann, den Mut, Dinge zu ändern, die ich ändern kann, und die Weisheit, das eine vom anderen zu unterscheiden.", "author": "Reinhold Niebuhr", "source": "Gelassenheitsgebet", "translated": true, "categories": ["gelassenheit", "mut", "weisheit"]},
+  {"id": "wilde-romanze", "text": "Sich selbst zu lieben ist der Beginn einer lebenslangen Romanze.", "author": "Oscar Wilde", "source": "Ein idealer Gatte", "translated": true, "categories": ["selbstvertrauen", "liebe"]},
+  {"id": "emerson-vertraue", "text": "Vertraue dir selbst: Jedes Herz schwingt mit dieser eisernen Saite.", "author": "Ralph Waldo Emerson", "source": "Self-Reliance", "translated": true, "categories": ["selbstvertrauen"]},
+  {"id": "thoreau-traeume", "text": "Wer selbstbewusst in Richtung seiner Träume geht und das Leben zu führen versucht, das er sich vorgestellt hat, wird einem Erfolg begegnen, den er in gewöhnlichen Stunden nicht erwartet.", "author": "Henry David Thoreau", "source": "Walden", "translated": true, "categories": ["motivation", "mut", "selbstvertrauen"]},
+  {"id": "kierkegaard-rueckwaerts", "text": "Das Leben kann nur rückwärts verstanden, aber nur vorwärts gelebt werden.", "author": "Søren Kierkegaard", "source": "Tagebücher, 1843", "translated": true, "categories": ["weisheit", "gelassenheit"]},
+  {"id": "pascal-herz", "text": "Das Herz hat seine Gründe, die der Verstand nicht kennt.", "author": "Blaise Pascal", "source": "Pensées", "translated": true, "categories": ["liebe"]},
+  {"id": "voltaire-bessere", "text": "Das Bessere ist der Feind des Guten.", "author": "Voltaire", "source": "La Bégueule", "translated": true, "categories": ["motivation", "gelassenheit"]},
+  {"id": "camus-sommer", "text": "Mitten im Winter erfuhr ich endlich, dass in mir ein unbesiegbarer Sommer liegt.", "author": "Albert Camus", "source": "Rückkehr nach Tipasa", "translated": true, "categories": ["durchhalten", "selbstvertrauen"]},
+  {"id": "camus-sisyphos", "text": "Wir müssen uns Sisyphos als einen glücklichen Menschen vorstellen.", "author": "Albert Camus", "source": "Der Mythos des Sisyphos", "translated": true, "categories": ["durchhalten", "glueck"]}
+]

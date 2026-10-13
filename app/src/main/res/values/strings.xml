@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tagesmotivation</string>
+    <string name="widget_name">Zitat des Moments</string>
+    <string name="widget_description">Ein Zitat auf dem Startbildschirm, das alle paar Stunden wechselt.</string>
+    <string name="notification_channel_name">Tägliche Zitate</string>
+    <string name="notification_channel_description">Erinnerungen mit einem Zitat zu den eingestellten Zeiten</string>
+    <string name="widget_preview_quote">„Während man es aufschiebt, eilt das Leben vorüber.“</string>
+    <string name="widget_preview_author">— Seneca</string>
+</resources>
