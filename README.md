@@ -1,6 +1,6 @@
 # Tagesmotivation
 
-Android-App mit motivierenden Zitaten auf Deutsch: Vollbild-Feed zum Wischen, Kategorien, Favoriten, Themes, Teilen als Bild, tägliche Erinnerungen und ein Homescreen-Widget. Alles offline, ohne Konto und ohne Werbung.
+Android-App mit motivierenden Zitaten auf Deutsch: Vollbild-Feed zum Wischen, Kategorien, Favoriten, eigene Zitate, Themes, Teilen als Bild, tägliche Erinnerungen und ein Homescreen-Widget. Alles offline, ohne Konto und ohne Werbung.
 
 ## Bauen und installieren
 
@@ -18,8 +18,8 @@ Voraussetzung: Android Studio (aktuelle Version) oder JDK 17+ mit Android SDK.
 app/src/main/
 ├── assets/quotes.json              Zitate (Quelle der Wahrheit)
 └── java/de/motivationcode/app/
-    ├── data/                       Modelle, Repositories, DataStore, Themes
-    ├── ui/                         Compose-Screens + ViewModels (feed, categories, themes, settings)
+    ├── data/                       Modelle, Repositories, DataStore, Themes, eigene Zitate (data/own)
+    ├── ui/                         Compose-Screens + ViewModels (feed, categories, themes, settings, own)
     ├── reminders/                  Erinnerungen mit WorkManager
     ├── widget/                     Glance-Widget
     └── share/                      Zitat als Bild teilen

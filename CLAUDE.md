@@ -15,7 +15,7 @@ Android app that shows motivational quotes in German as a full-screen swipe feed
 - AGP 9 with built-in Kotlin (no `kotlin-android` plugin applied in app/)
 - minSdk 26, targetSdk 36, compileSdk 37 (AndroidX libs require 37; targetSdk stays at the Play minimum)
 - Versions only in gradle/libs.versions.toml
-- DI: manual (`di/AppContainer.kt`) · Storage: Preferences DataStore (no Room) · Network: none
+- DI: manual (`di/AppContainer.kt`) · Storage: Preferences DataStore for settings, typed DataStore with a JSON serializer for own quotes (no Room) · Network: none
 - Background work: WorkManager · Widget: Glance
 
 ## Architecture
@@ -30,6 +30,7 @@ Android app that shows motivational quotes in German as a full-screen swipe feed
 - Known misattributions stay out (e.g. Einstein "insanity", Gandhi "be the change", Aristotle "we are what we repeatedly do").
 - Non-German originals get `"translated": true` and a `source`. Text without surrounding quotation marks.
 - `QuotesDataTest` checks the file; run the unit tests after every edit.
+- User-created quotes live in `data/own/` (not in quotes.json); `QuoteRepository.quotes` merges both as a Flow.
 
 ## How to work with me
 - I'm a hobby developer. After each change, explain briefly in German what you changed and why.

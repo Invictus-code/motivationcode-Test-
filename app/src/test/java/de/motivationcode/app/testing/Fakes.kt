@@ -2,20 +2,46 @@ package de.motivationcode.app.testing
 
 import de.motivationcode.app.data.model.FeedFilter
 import de.motivationcode.app.data.model.Quote
+import de.motivationcode.app.data.own.OwnQuote
+import de.motivationcode.app.data.own.OwnQuoteRepository
 import de.motivationcode.app.data.quotes.QuoteRepository
 import de.motivationcode.app.data.settings.UserPreferences
 import de.motivationcode.app.data.settings.UserPreferencesRepository
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import java.time.LocalTime
 
 class FakeQuoteRepository(
-    private val quotes: List<Quote> = sampleQuotes,
+    initial: List<Quote> = sampleQuotes,
     private val error: Throwable? = null,
 ) : QuoteRepository {
-    override suspend fun allQuotes(): List<Quote> {
-        error?.let { throw it }
-        return quotes
+    val state = MutableStateFlow(initial)
+    override val quotes: Flow<List<Quote>> = if (error != null) flow { throw error } else state
+}
+
+/** Merkt sich nur die Aufrufe; die echte Logik testet OwnQuoteRepositoryTest. */
+class FakeOwnQuoteRepository(initial: List<OwnQuote> = emptyList()) : OwnQuoteRepository {
+    val state = MutableStateFlow(initial)
+    val calls = mutableListOf<String>()
+    override val ownQuotes: Flow<List<OwnQuote>> = state
+
+    override suspend fun add(text: String, author: String): OwnQuote? {
+        calls += "add:$text|$author"
+        return null
+    }
+
+    override suspend fun update(id: String, text: String, author: String) {
+        calls += "update:$id:$text|$author"
+    }
+
+    override suspend fun delete(id: String) {
+        calls += "delete:$id"
+    }
+
+    override suspend fun restore(quote: OwnQuote) {
+        calls += "restore:${quote.id}"
     }
 }
 
@@ -47,3 +73,5 @@ val sampleQuotes = listOf(
     Quote("d", "Text D", "Autor D", categories = listOf("weisheit")),
     Quote("e", "Text E", "Autor E", categories = listOf("liebe", "glueck")),
 )
+
+val sampleOwnQuote = Quote("own-1", "Mein Spruch", "", categories = emptyList(), isOwn = true)

@@ -79,6 +79,7 @@ fun FeedRoute(
     onOpenCategories: () -> Unit,
     onOpenThemes: () -> Unit,
     onOpenSettings: () -> Unit,
+    onOpenOwnQuotes: () -> Unit,
     viewModel: FeedViewModel = viewModel(factory = FeedViewModel.Factory),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -92,6 +93,7 @@ fun FeedRoute(
         onOpenCategories = onOpenCategories,
         onOpenThemes = onOpenThemes,
         onOpenSettings = onOpenSettings,
+        onOpenOwnQuotes = onOpenOwnQuotes,
     )
 }
 
@@ -104,6 +106,7 @@ fun FeedScreen(
     onOpenCategories: () -> Unit,
     onOpenThemes: () -> Unit,
     onOpenSettings: () -> Unit,
+    onOpenOwnQuotes: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val theme = (uiState as? FeedUiState.Content)?.theme ?: QuoteThemes.default
@@ -129,7 +132,7 @@ fun FeedScreen(
                 )
 
                 is FeedUiState.Content -> if (uiState.quotes.isEmpty()) {
-                    EmptyFeed(filter = uiState.filter, onShowAll = onShowAll)
+                    EmptyFeed(filter = uiState.filter, onShowAll = onShowAll, onOpenOwnQuotes = onOpenOwnQuotes)
                 } else {
                     QuotePager(
                         state = uiState,
@@ -259,14 +262,19 @@ private fun QuotePage(
                 textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(if (compact) 12.dp else 24.dp))
-            Text(
-                text = "— ${quote.author}",
-                style = MaterialTheme.typography.titleMedium.copy(fontFamily = fontFamily),
-                fontWeight = FontWeight.SemiBold,
-                textAlign = TextAlign.Center,
-            )
-            val sourceLine = listOfNotNull(quote.source, "Übersetzung".takeIf { quote.translated })
-                .joinToString(" · ")
+            if (quote.author.isNotBlank()) {
+                Text(
+                    text = "— ${quote.author}",
+                    style = MaterialTheme.typography.titleMedium.copy(fontFamily = fontFamily),
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            val sourceLine = listOfNotNull(
+                quote.source,
+                "Übersetzung".takeIf { quote.translated },
+                "Eigenes Zitat".takeIf { quote.isOwn },
+            ).joinToString(" · ")
             if (sourceLine.isNotEmpty()) {
                 Text(
                     text = sourceLine,
@@ -376,13 +384,17 @@ private fun BottomAction(action: FeedAction) {
 }
 
 @Composable
-private fun EmptyFeed(filter: FeedFilter, onShowAll: () -> Unit) {
-    val (title, text) = if (filter == FeedFilter.Favorites) {
-        "Noch keine Favoriten" to "Tippe bei einem Zitat auf das Herz, dann landet es hier."
-    } else {
-        "Keine Zitate gefunden" to "In dieser Auswahl gibt es gerade nichts."
+private fun EmptyFeed(filter: FeedFilter, onShowAll: () -> Unit, onOpenOwnQuotes: () -> Unit) {
+    val (title, text) = when (filter) {
+        FeedFilter.Favorites -> "Noch keine Favoriten" to "Tippe bei einem Zitat auf das Herz, dann landet es hier."
+        FeedFilter.Own -> "Noch keine eigenen Zitate" to "Schreib deinen ersten eigenen Spruch auf."
+        else -> "Keine Zitate gefunden" to "In dieser Auswahl gibt es gerade nichts."
     }
     CenteredMessage(title = title, text = text) {
+        if (filter == FeedFilter.Own) {
+            ThemedOutlinedButton("Zitat hinzufügen", onOpenOwnQuotes)
+            Spacer(Modifier.height(8.dp))
+        }
         ThemedOutlinedButton("Alle Zitate zeigen", onShowAll)
     }
 }
@@ -455,7 +467,7 @@ private fun FeedContentPreview() {
         FeedScreen(
             uiState = FeedUiState.Content(previewQuotes, setOf("preview"), FeedFilter.All, QuoteThemes.default),
             onToggleFavorite = {}, onShare = { _, _ -> }, onShowAll = {},
-            onOpenCategories = {}, onOpenThemes = {}, onOpenSettings = {},
+            onOpenCategories = {}, onOpenThemes = {}, onOpenSettings = {}, onOpenOwnQuotes = {},
         )
     }
 }
@@ -467,7 +479,7 @@ private fun FeedEmptyPreview() {
         FeedScreen(
             uiState = FeedUiState.Content(emptyList(), emptySet(), FeedFilter.Favorites, QuoteThemes.byId("papier")),
             onToggleFavorite = {}, onShare = { _, _ -> }, onShowAll = {},
-            onOpenCategories = {}, onOpenThemes = {}, onOpenSettings = {},
+            onOpenCategories = {}, onOpenThemes = {}, onOpenSettings = {}, onOpenOwnQuotes = {},
         )
     }
 }
@@ -479,7 +491,7 @@ private fun FeedLoadingPreview() {
         FeedScreen(
             uiState = FeedUiState.Loading,
             onToggleFavorite = {}, onShare = { _, _ -> }, onShowAll = {},
-            onOpenCategories = {}, onOpenThemes = {}, onOpenSettings = {},
+            onOpenCategories = {}, onOpenThemes = {}, onOpenSettings = {}, onOpenOwnQuotes = {},
         )
     }
 }
@@ -491,7 +503,7 @@ private fun FeedErrorPreview() {
         FeedScreen(
             uiState = FeedUiState.Error,
             onToggleFavorite = {}, onShare = { _, _ -> }, onShowAll = {},
-            onOpenCategories = {}, onOpenThemes = {}, onOpenSettings = {},
+            onOpenCategories = {}, onOpenThemes = {}, onOpenSettings = {}, onOpenOwnQuotes = {},
         )
     }
 }

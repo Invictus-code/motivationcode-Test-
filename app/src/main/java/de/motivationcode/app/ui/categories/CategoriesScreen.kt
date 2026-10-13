@@ -12,12 +12,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -27,6 +29,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -46,12 +49,14 @@ import de.motivationcode.app.ui.theme.TagesmotivationTheme
 @Composable
 fun CategoriesRoute(
     onBack: () -> Unit,
+    onManageOwnQuotes: () -> Unit,
     viewModel: CategoriesViewModel = viewModel(factory = CategoriesViewModel.Factory),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     CategoriesScreen(
         uiState = uiState,
         onSelect = { filter -> viewModel.select(filter, onSaved = onBack) },
+        onManageOwnQuotes = onManageOwnQuotes,
         onBack = onBack,
     )
 }
@@ -60,6 +65,7 @@ fun CategoriesRoute(
 fun CategoriesScreen(
     uiState: CategoriesUiState,
     onSelect: (FeedFilter) -> Unit,
+    onManageOwnQuotes: () -> Unit,
     onBack: () -> Unit,
 ) {
     SystemBarsAppearance(lightBackground = !isSystemInDarkTheme())
@@ -93,7 +99,11 @@ fun CategoriesScreen(
                     verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     items(uiState.items, key = { it.filter.serialize() }) { item ->
-                        CategoryCard(item = item, onClick = { onSelect(item.filter) })
+                        CategoryCard(
+                            item = item,
+                            onClick = { onSelect(item.filter) },
+                            onManage = onManageOwnQuotes.takeIf { item.filter == FeedFilter.Own },
+                        )
                     }
                 }
             }
@@ -102,7 +112,7 @@ fun CategoriesScreen(
 }
 
 @Composable
-private fun CategoryCard(item: CategoryItem, onClick: () -> Unit) {
+private fun CategoryCard(item: CategoryItem, onClick: () -> Unit, onManage: (() -> Unit)? = null) {
     val colors = if (item.selected) {
         CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -130,6 +140,15 @@ private fun CategoryCard(item: CategoryItem, onClick: () -> Unit) {
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(top = 4.dp),
                 )
+                if (onManage != null) {
+                    TextButton(
+                        onClick = onManage,
+                        contentPadding = PaddingValues(horizontal = 0.dp, vertical = 4.dp),
+                    ) {
+                        Icon(Icons.Filled.Edit, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Text("Verwalten", modifier = Modifier.padding(start = 6.dp))
+                    }
+                }
             }
             if (item.selected) {
                 Icon(Icons.Filled.CheckCircle, contentDescription = "Ausgewählt")
@@ -147,11 +166,13 @@ private fun CategoriesPreview() {
                 listOf(
                     CategoryItem(FeedFilter.All, 85, selected = true),
                     CategoryItem(FeedFilter.Favorites, 0, selected = false),
+                    CategoryItem(FeedFilter.Own, 2, selected = false),
                     CategoryItem(FeedFilter.ByCategory(Category.MUT), 21, selected = false),
                     CategoryItem(FeedFilter.ByCategory(Category.GLUECK), 9, selected = false),
                 ),
             ),
             onSelect = {},
+            onManageOwnQuotes = {},
             onBack = {},
         )
     }
@@ -161,6 +182,6 @@ private fun CategoriesPreview() {
 @Composable
 private fun CategoriesLoadingPreview() {
     TagesmotivationTheme {
-        CategoriesScreen(uiState = CategoriesUiState.Loading, onSelect = {}, onBack = {})
+        CategoriesScreen(uiState = CategoriesUiState.Loading, onSelect = {}, onManageOwnQuotes = {}, onBack = {})
     }
 }

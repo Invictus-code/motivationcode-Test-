@@ -16,7 +16,8 @@ import de.motivationcode.app.data.themes.QuoteThemes
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -38,7 +39,9 @@ class FeedViewModel(
     shuffleSeed: Long = Random.nextLong(),
 ) : ViewModel() {
 
-    private val quotes = flow { emit(runCatching { quoteRepository.allQuotes() }) }
+    private val quotes = quoteRepository.quotes
+        .map { Result.success(it) }
+        .catch { emit(Result.failure(it)) }
 
     val uiState: StateFlow<FeedUiState> =
         combine(quotes, preferencesRepository.preferences) { result, prefs ->

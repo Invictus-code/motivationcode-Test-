@@ -55,7 +55,7 @@ object ReminderNotifications {
         val text = "„${quote.text}“"
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_stat_quote)
-            .setContentTitle(quote.author)
+            .setContentTitle(quote.author.ifBlank { context.getString(R.string.own_quote_title) })
             .setContentText(text)
             .setStyle(NotificationCompat.BigTextStyle().bigText(text))
             .setContentIntent(pendingIntent)

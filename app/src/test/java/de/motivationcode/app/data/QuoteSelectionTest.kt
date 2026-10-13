@@ -5,6 +5,7 @@ import de.motivationcode.app.data.model.FeedFilter
 import de.motivationcode.app.data.quotes.buildFeed
 import de.motivationcode.app.data.quotes.filterQuotes
 import de.motivationcode.app.data.quotes.pickQuote
+import de.motivationcode.app.testing.sampleOwnQuote
 import de.motivationcode.app.testing.sampleQuotes
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -32,6 +33,25 @@ class QuoteSelectionTest {
         val second = buildFeed(sampleQuotes, FeedFilter.All, setOf("a"), seed = 42)
         assertEquals(first, second)
         assertEquals(sampleQuotes.toSet(), first.toSet())
+    }
+
+    @Test
+    fun `own filter keeps only own quotes`() {
+        val result = filterQuotes(sampleQuotes + sampleOwnQuote, FeedFilter.Own, emptySet())
+        assertEquals(listOf(sampleOwnQuote), result)
+    }
+
+    @Test
+    fun `adding a quote does not reorder the others`() {
+        val before = buildFeed(sampleQuotes, FeedFilter.All, emptySet(), seed = 99)
+        val after = buildFeed(sampleQuotes + sampleOwnQuote, FeedFilter.All, emptySet(), seed = 99)
+        assertEquals(before, after - sampleOwnQuote)
+    }
+
+    @Test
+    fun `different seeds give different orders`() {
+        val orders = (1L..10L).map { seed -> buildFeed(sampleQuotes, FeedFilter.All, emptySet(), seed) }.toSet()
+        assertTrue("Mischung wirkt nicht zufällig", orders.size > 1)
     }
 
     @Test

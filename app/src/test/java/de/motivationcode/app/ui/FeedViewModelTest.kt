@@ -6,6 +6,8 @@ import de.motivationcode.app.data.settings.UserPreferences
 import de.motivationcode.app.testing.FakeQuoteRepository
 import de.motivationcode.app.testing.FakeUserPreferencesRepository
 import de.motivationcode.app.testing.MainDispatcherRule
+import de.motivationcode.app.testing.sampleOwnQuote
+import de.motivationcode.app.testing.sampleQuotes
 import de.motivationcode.app.ui.feed.FeedUiState
 import de.motivationcode.app.ui.feed.FeedViewModel
 import kotlinx.coroutines.flow.first
@@ -75,6 +77,31 @@ class FeedViewModelTest {
         viewModel.showAllQuotes()
 
         assertEquals(FeedFilter.All, prefs.state.value.feedFilter)
+    }
+
+    @Test
+    fun `own quotes appear in all quotes and in the own filter`() = runTest {
+        val quotes = FakeQuoteRepository(sampleQuotes + sampleOwnQuote)
+        val prefs = FakeUserPreferencesRepository()
+        val viewModel = FeedViewModel(quotes, prefs, shuffleSeed = 1)
+        assertTrue(sampleOwnQuote in viewModel.content().quotes)
+
+        prefs.setFeedFilter(FeedFilter.Own)
+
+        val own = viewModel.uiState.first { (it as? FeedUiState.Content)?.filter == FeedFilter.Own }
+            as FeedUiState.Content
+        assertEquals(listOf(sampleOwnQuote), own.quotes)
+    }
+
+    @Test
+    fun `new own quote shows up without reload`() = runTest {
+        val quotes = FakeQuoteRepository()
+        val viewModel = FeedViewModel(quotes, FakeUserPreferencesRepository(), shuffleSeed = 1)
+        assertEquals(5, viewModel.content().quotes.size)
+
+        quotes.state.value = sampleQuotes + sampleOwnQuote
+
+        viewModel.uiState.first { (it as? FeedUiState.Content)?.quotes?.size == 6 }
     }
 
     @Test

@@ -13,7 +13,8 @@ import java.io.File
 
 object QuoteSharer {
 
-    fun shareText(quote: Quote): String = "„${quote.text}“ — ${quote.author}"
+    fun shareText(quote: Quote): String =
+        if (quote.author.isBlank()) "„${quote.text}“" else "„${quote.text}“ — ${quote.author}"
 
     /** Rendert das Zitat als PNG in den Cache und öffnet das Android-Teilen-Menü. */
     suspend fun share(context: Context, quote: Quote, theme: QuoteTheme) {

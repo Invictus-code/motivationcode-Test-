@@ -1,7 +1,7 @@
 package de.motivationcode.app.data
 
 import de.motivationcode.app.data.model.Category
-import de.motivationcode.app.data.quotes.AssetQuoteRepository
+import de.motivationcode.app.data.quotes.BundledQuotes
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -10,8 +10,8 @@ import java.io.File
 /** Prüft die mitgelieferte quotes.json, damit Tippfehler beim Ergänzen sofort auffallen. */
 class QuotesDataTest {
 
-    private val quotes = AssetQuoteRepository.parseQuotes(
-        File("src/main/assets/${AssetQuoteRepository.QUOTES_FILE}").readText(),
+    private val quotes = BundledQuotes.parseQuotes(
+        File("src/main/assets/${BundledQuotes.QUOTES_FILE}").readText(),
     )
 
     @Test

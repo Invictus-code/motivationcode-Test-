@@ -47,14 +47,15 @@ object QuoteImageRenderer {
             this.typeface = Typeface.create(typeface, Typeface.BOLD)
             this.textSize = 40f
         }
-        val authorLayout = centeredLayout("— ${quote.author}", authorPaint, textWidth, lineSpacing = 1.1f)
+        val authorLayout = quote.author.takeIf { it.isNotBlank() }
+            ?.let { centeredLayout("— $it", authorPaint, textWidth, lineSpacing = 1.1f) }
 
-        val gap = 48f
-        val top = (height - (quoteLayout.height + gap + authorLayout.height)) / 2f
+        val gap = if (authorLayout != null) 48f else 0f
+        val top = (height - (quoteLayout.height + gap + (authorLayout?.height ?: 0))) / 2f
         canvas.withTranslation(margin, top) {
             quoteLayout.draw(this)
             translate(0f, quoteLayout.height + gap)
-            authorLayout.draw(this)
+            authorLayout?.draw(this)
         }
 
         val footerPaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {

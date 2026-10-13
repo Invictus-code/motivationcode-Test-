@@ -9,7 +9,7 @@ class FeedFilterTest {
 
     @Test
     fun `serialize and deserialize round trip`() {
-        val filters = listOf(FeedFilter.All, FeedFilter.Favorites) + Category.entries.map { FeedFilter.ByCategory(it) }
+        val filters = listOf(FeedFilter.All, FeedFilter.Favorites, FeedFilter.Own) + Category.entries.map { FeedFilter.ByCategory(it) }
         filters.forEach { assertEquals(it, FeedFilter.deserialize(it.serialize())) }
     }
 

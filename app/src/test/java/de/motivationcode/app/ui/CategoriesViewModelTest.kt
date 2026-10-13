@@ -6,6 +6,8 @@ import de.motivationcode.app.data.settings.UserPreferences
 import de.motivationcode.app.testing.FakeQuoteRepository
 import de.motivationcode.app.testing.FakeUserPreferencesRepository
 import de.motivationcode.app.testing.MainDispatcherRule
+import de.motivationcode.app.testing.sampleOwnQuote
+import de.motivationcode.app.testing.sampleQuotes
 import de.motivationcode.app.ui.categories.CategoriesUiState
 import de.motivationcode.app.ui.categories.CategoriesViewModel
 import kotlinx.coroutines.flow.first
@@ -25,13 +27,15 @@ class CategoriesViewModelTest {
         val prefs = FakeUserPreferencesRepository(
             UserPreferences(favoriteIds = setOf("a"), feedFilter = FeedFilter.ByCategory(Category.MUT)),
         )
-        val viewModel = CategoriesViewModel(FakeQuoteRepository(), prefs)
+        val viewModel = CategoriesViewModel(FakeQuoteRepository(sampleQuotes + sampleOwnQuote), prefs)
 
         val items = (viewModel.uiState.first { it is CategoriesUiState.Content } as CategoriesUiState.Content).items
         val byFilter = items.associateBy { it.filter }
 
-        assertEquals(5, byFilter.getValue(FeedFilter.All).count)
+        assertEquals(6, byFilter.getValue(FeedFilter.All).count)
         assertEquals(1, byFilter.getValue(FeedFilter.Favorites).count)
+        assertEquals(1, byFilter.getValue(FeedFilter.Own).count)
+        assertEquals(listOf(FeedFilter.All, FeedFilter.Favorites, FeedFilter.Own), items.take(3).map { it.filter })
         assertEquals(2, byFilter.getValue(FeedFilter.ByCategory(Category.MUT)).count)
         assertEquals(listOf(FeedFilter.ByCategory(Category.MUT)), items.filter { it.selected }.map { it.filter })
     }

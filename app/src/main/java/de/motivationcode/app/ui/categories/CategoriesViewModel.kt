@@ -14,7 +14,8 @@ import de.motivationcode.app.data.settings.UserPreferencesRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
@@ -35,13 +36,15 @@ class CategoriesViewModel(
     private val preferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
 
-    private val quotes = flow { emit(runCatching { quoteRepository.allQuotes() }) }
+    private val quotes = quoteRepository.quotes
+        .map { Result.success(it) }
+        .catch { emit(Result.failure(it)) }
 
     val uiState: StateFlow<CategoriesUiState> =
         combine(quotes, preferencesRepository.preferences) { result, prefs ->
             result.fold(
                 onSuccess = { all ->
-                    val filters = listOf(FeedFilter.All, FeedFilter.Favorites) +
+                    val filters = listOf(FeedFilter.All, FeedFilter.Favorites, FeedFilter.Own) +
                         Category.entries.map { FeedFilter.ByCategory(it) }
                     CategoriesUiState.Content(
                         filters.map { filter ->

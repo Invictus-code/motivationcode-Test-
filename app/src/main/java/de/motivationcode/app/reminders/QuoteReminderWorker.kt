@@ -18,7 +18,7 @@ class QuoteReminderWorker(
         val prefs = container.preferencesRepository.preferences.first()
         if (!prefs.reminders.enabled) return Result.success()
 
-        val quote = pickQuote(container.quoteRepository.allQuotes(), prefs.feedFilter, prefs.favoriteIds)
+        val quote = pickQuote(container.quoteRepository.quotes.first(), prefs.feedFilter, prefs.favoriteIds)
         if (quote != null) ReminderNotifications.show(applicationContext, quote)
 
         // An die laufende Arbeit anhängen, damit sie sich nicht selbst abbricht.

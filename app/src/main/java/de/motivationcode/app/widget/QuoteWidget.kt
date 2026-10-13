@@ -61,15 +61,17 @@ class QuoteWidget : GlanceAppWidget() {
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val container = context.appContainer
-        val quotes = container.quoteRepository.allQuotes()
+        val initialQuotes = container.quoteRepository.quotes.first()
         val initialPrefs = container.preferencesRepository.preferences.first()
 
         val state = getAppWidgetState(context, PreferencesGlanceStateDefinition, id)
-        if (quotes.none { it.id == state[QUOTE_ID_KEY] }) {
+        if (initialQuotes.none { it.id == state[QUOTE_ID_KEY] }) {
             showNewQuote(context, id, update = false)
         }
 
         provideContent {
+            // Live mitlesen: eigene Zitate und Theme können sich ändern, während das Widget läuft.
+            val quotes by container.quoteRepository.quotes.collectAsState(initialQuotes)
             val prefs by container.preferencesRepository.preferences.collectAsState(initialPrefs)
             val quoteId = currentState(QUOTE_ID_KEY)
             val quote = quotes.firstOrNull { it.id == quoteId } ?: quotes.firstOrNull()
@@ -84,7 +86,7 @@ class QuoteWidget : GlanceAppWidget() {
         suspend fun showNewQuote(context: Context, id: GlanceId, update: Boolean = true) {
             val container = context.appContainer
             val prefs = container.preferencesRepository.preferences.first()
-            val quote = pickQuote(container.quoteRepository.allQuotes(), prefs.feedFilter, prefs.favoriteIds)
+            val quote = pickQuote(container.quoteRepository.quotes.first(), prefs.feedFilter, prefs.favoriteIds)
                 ?: return
             updateAppWidgetState(context, id) { it[QUOTE_ID_KEY] = quote.id }
             if (update) QuoteWidget().update(context, id)
@@ -135,7 +137,7 @@ private fun WidgetContent(quote: Quote?, theme: QuoteTheme) {
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = quote?.let { "— ${it.author}" } ?: "",
+                text = quote?.author?.takeIf { it.isNotBlank() }?.let { "— $it" } ?: "",
                 style = TextStyle(
                     color = textColor,
                     fontSize = 13.sp,

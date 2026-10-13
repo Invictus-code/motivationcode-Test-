@@ -10,6 +10,7 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import de.motivationcode.app.ui.categories.CategoriesRoute
 import de.motivationcode.app.ui.feed.FeedRoute
+import de.motivationcode.app.ui.own.OwnQuotesRoute
 import de.motivationcode.app.ui.settings.SettingsRoute
 import de.motivationcode.app.ui.themes.ThemesRoute
 import kotlinx.serialization.Serializable
@@ -25,6 +26,9 @@ data object ThemesKey : NavKey
 
 @Serializable
 data object SettingsKey : NavKey
+
+@Serializable
+data object OwnQuotesKey : NavKey
 
 @Composable
 fun AppNavigation() {
@@ -43,11 +47,18 @@ fun AppNavigation() {
                     onOpenCategories = { backStack.open(CategoriesKey) },
                     onOpenThemes = { backStack.open(ThemesKey) },
                     onOpenSettings = { backStack.open(SettingsKey) },
+                    onOpenOwnQuotes = { backStack.open(OwnQuotesKey) },
                 )
             }
-            entry<CategoriesKey> { CategoriesRoute(onBack = { backStack.goBack() }) }
+            entry<CategoriesKey> {
+                CategoriesRoute(
+                    onBack = { backStack.goBack() },
+                    onManageOwnQuotes = { backStack.open(OwnQuotesKey) },
+                )
+            }
             entry<ThemesKey> { ThemesRoute(onBack = { backStack.goBack() }) }
             entry<SettingsKey> { SettingsRoute(onBack = { backStack.goBack() }) }
+            entry<OwnQuotesKey> { OwnQuotesRoute(onBack = { backStack.goBack() }) }
         },
     )
 }
