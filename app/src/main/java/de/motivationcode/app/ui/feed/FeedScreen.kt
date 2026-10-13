@@ -1,8 +1,11 @@
 package de.motivationcode.app.ui.feed
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,12 +23,14 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -41,10 +46,12 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
@@ -102,11 +109,13 @@ fun FeedScreen(
     val theme = (uiState as? FeedUiState.Content)?.theme ?: QuoteThemes.default
     SystemBarsAppearance(lightBackground = theme.isLight)
 
-    Box(
+    BoxWithConstraints(
         modifier = modifier
             .fillMaxSize()
             .background(theme.backgroundBrush()),
     ) {
+        // Wenig Höhe (Querformat): Aktionen wandern nach oben, Text wird kleiner.
+        val compact = maxHeight < 480.dp
         CompositionLocalProvider(LocalContentColor provides Color(theme.textColor)) {
             when (uiState) {
                 FeedUiState.Loading -> CircularProgressIndicator(
@@ -124,6 +133,7 @@ fun FeedScreen(
                 } else {
                     QuotePager(
                         state = uiState,
+                        compact = compact,
                         onToggleFavorite = onToggleFavorite,
                         onShare = { onShare(it, uiState.theme) },
                         onOpenCategories = onOpenCategories,
@@ -131,23 +141,47 @@ fun FeedScreen(
                 }
             }
 
-            FilterChip(
-                title = (uiState as? FeedUiState.Content)?.filter?.title ?: FeedFilter.All.title,
-                onClick = onOpenCategories,
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal))
-                    .padding(top = 8.dp),
+            val filterTitle = (uiState as? FeedUiState.Content)?.filter?.title ?: FeedFilter.All.title
+            val actions = listOf(
+                FeedAction(ImageVector.vectorResource(R.drawable.ic_category), "Kategorien", onOpenCategories),
+                FeedAction(ImageVector.vectorResource(R.drawable.ic_palette), "Themes", onOpenThemes),
+                FeedAction(Icons.Filled.Settings, "Einstellungen", onOpenSettings),
             )
-            BottomActions(
-                onOpenCategories = onOpenCategories,
-                onOpenThemes = onOpenThemes,
-                onOpenSettings = onOpenSettings,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal))
-                    .padding(bottom = 8.dp),
-            )
+            val topInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)
+            if (compact) {
+                Row(
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .fillMaxWidth()
+                        .windowInsetsPadding(topInsets)
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    FilterChip(title = filterTitle, onClick = onOpenCategories)
+                    Spacer(Modifier.weight(1f))
+                    actions.forEach { action ->
+                        IconButton(onClick = action.onClick) {
+                            Icon(action.icon, contentDescription = action.label)
+                        }
+                    }
+                }
+            } else {
+                FilterChip(
+                    title = filterTitle,
+                    onClick = onOpenCategories,
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .windowInsetsPadding(topInsets)
+                        .padding(top = 8.dp),
+                )
+                BottomActions(
+                    actions = actions,
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom + WindowInsetsSides.Horizontal))
+                        .padding(bottom = 12.dp),
+                )
+            }
         }
     }
 }
@@ -155,6 +189,7 @@ fun FeedScreen(
 @Composable
 private fun QuotePager(
     state: FeedUiState.Content,
+    compact: Boolean,
     onToggleFavorite: (String) -> Unit,
     onShare: (Quote) -> Unit,
     onOpenCategories: () -> Unit,
@@ -180,7 +215,8 @@ private fun QuotePager(
                 quote = quote,
                 theme = state.theme,
                 isFavorite = quote.id in state.favoriteIds,
-                showSwipeHint = page == 0,
+                compact = compact,
+                showSwipeHint = page == 0 && !compact,
                 onToggleFavorite = { onToggleFavorite(quote.id) },
                 onShare = { onShare(quote) },
             )
@@ -193,28 +229,36 @@ private fun QuotePage(
     quote: Quote,
     theme: QuoteTheme,
     isFavorite: Boolean,
+    compact: Boolean,
     showSwipeHint: Boolean,
     onToggleFavorite: () -> Unit,
     onShare: () -> Unit,
 ) {
     val fontFamily = theme.font.toFontFamily()
-    Box(
+    // Oben Platz für den Kategorie-Chip, unten für die Aktionsleiste (im Querformat ist die oben).
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .windowInsetsPadding(WindowInsets.safeDrawing)
-            .padding(horizontal = 32.dp, vertical = 72.dp),
-        contentAlignment = Alignment.Center,
+            .padding(
+                start = 32.dp,
+                end = 32.dp,
+                top = if (compact) 64.dp else 72.dp,
+                bottom = if (compact) 8.dp else 96.dp,
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Spacer(Modifier.weight(1f))
         Column(
-            modifier = Modifier.widthIn(max = 560.dp),
+            modifier = Modifier.widthIn(max = if (compact) 720.dp else 560.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = "„${quote.text}“",
-                style = quoteTextStyle(quote.text.length).copy(fontFamily = fontFamily),
+                style = quoteTextStyle(quote.text.length, compact).copy(fontFamily = fontFamily),
                 textAlign = TextAlign.Center,
             )
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(if (compact) 12.dp else 24.dp))
             Text(
                 text = "— ${quote.author}",
                 style = MaterialTheme.typography.titleMedium.copy(fontFamily = fontFamily),
@@ -232,7 +276,7 @@ private fun QuotePage(
                     modifier = Modifier.padding(top = 4.dp),
                 )
             }
-            Spacer(Modifier.height(32.dp))
+            Spacer(Modifier.height(if (compact) 8.dp else 32.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
                 IconButton(onClick = onToggleFavorite, modifier = Modifier.size(56.dp)) {
                     Icon(
@@ -250,24 +294,26 @@ private fun QuotePage(
                 }
             }
         }
+        Spacer(Modifier.weight(1f))
         if (showSwipeHint) {
             Text(
                 text = "Nach oben wischen für das nächste Zitat",
                 style = MaterialTheme.typography.labelMedium,
                 color = LocalContentColor.current.copy(alpha = 0.85f),
-                modifier = Modifier.align(Alignment.BottomCenter),
+                textAlign = TextAlign.Center,
             )
         }
     }
 }
 
-private fun quoteTextStyle(length: Int): TextStyle {
-    val size = when {
-        length <= 60 -> 32
-        length <= 120 -> 28
-        length <= 200 -> 24
-        else -> 21
+private fun quoteTextStyle(length: Int, compact: Boolean): TextStyle {
+    val base = when {
+        length <= 60 -> 32f
+        length <= 120 -> 28f
+        length <= 200 -> 24f
+        else -> 21f
     }
+    val size = if (compact) base * 0.8f else base
     return TextStyle(fontSize = size.sp, lineHeight = (size * 1.3f).sp, fontWeight = FontWeight.Medium)
 }
 
@@ -290,41 +336,42 @@ private fun FilterChip(title: String, onClick: () -> Unit, modifier: Modifier = 
     }
 }
 
+private class FeedAction(val icon: ImageVector, val label: String, val onClick: () -> Unit)
+
 @Composable
-private fun BottomActions(
-    onOpenCategories: () -> Unit,
-    onOpenThemes: () -> Unit,
-    onOpenSettings: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+private fun BottomActions(actions: List<FeedAction>, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .widthIn(max = 560.dp),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        BottomAction(ImageVector.vectorResource(R.drawable.ic_category), "Kategorien", onOpenCategories)
-        BottomAction(ImageVector.vectorResource(R.drawable.ic_palette), "Themes", onOpenThemes)
-        BottomAction(Icons.Filled.Settings, "Einstellungen", onOpenSettings)
+        actions.forEach { BottomAction(it) }
     }
 }
 
 @Composable
-private fun BottomAction(icon: ImageVector, label: String, onClick: () -> Unit) {
-    Surface(
-        onClick = onClick,
-        shape = CircleShape,
-        color = LocalContentColor.current.copy(alpha = 0.14f),
-        contentColor = LocalContentColor.current,
+private fun BottomAction(action: FeedAction) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .clip(RoundedCornerShape(16.dp))
+            .clickable(role = Role.Button, onClick = action.onClick)
+            .padding(horizontal = 8.dp, vertical = 4.dp),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 14.dp, vertical = 10.dp),
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier
+                .size(52.dp)
+                .background(LocalContentColor.current.copy(alpha = 0.14f), CircleShape),
         ) {
-            Icon(icon, contentDescription = null, modifier = Modifier.size(20.dp))
-            Spacer(Modifier.size(6.dp))
-            Text(label, style = MaterialTheme.typography.labelLarge)
+            Icon(action.icon, contentDescription = null, modifier = Modifier.size(24.dp))
         }
+        Text(
+            text = action.label,
+            style = MaterialTheme.typography.labelMedium,
+            modifier = Modifier.padding(top = 4.dp),
+        )
     }
 }
 
@@ -336,7 +383,7 @@ private fun EmptyFeed(filter: FeedFilter, onShowAll: () -> Unit) {
         "Keine Zitate gefunden" to "In dieser Auswahl gibt es gerade nichts."
     }
     CenteredMessage(title = title, text = text) {
-        OutlinedButton(onClick = onShowAll) { Text("Alle Zitate zeigen") }
+        ThemedOutlinedButton("Alle Zitate zeigen", onShowAll)
     }
 }
 
@@ -346,10 +393,21 @@ private fun EndPage(filter: FeedFilter, onRestart: () -> Unit, onOpenCategories:
         title = "Das war's für „${filter.title}“",
         text = "Du hast alle Zitate dieser Auswahl gesehen.",
     ) {
-        OutlinedButton(onClick = onRestart) { Text("Nochmal von vorn") }
+        ThemedOutlinedButton("Nochmal von vorn", onRestart)
         Spacer(Modifier.height(8.dp))
-        OutlinedButton(onClick = onOpenCategories) { Text("Andere Kategorie wählen") }
+        ThemedOutlinedButton("Andere Kategorie wählen", onOpenCategories)
     }
+}
+
+/** Button in der Textfarbe des Themes (die Material-Standardfarbe wäre auf manchen Hintergründen unlesbar). */
+@Composable
+private fun ThemedOutlinedButton(text: String, onClick: () -> Unit) {
+    val color = LocalContentColor.current
+    OutlinedButton(
+        onClick = onClick,
+        colors = ButtonDefaults.outlinedButtonColors(contentColor = color),
+        border = BorderStroke(1.dp, color.copy(alpha = 0.6f)),
+    ) { Text(text) }
 }
 
 @Composable

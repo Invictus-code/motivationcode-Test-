@@ -78,7 +78,7 @@ fun ThemesScreen(
         },
     ) { padding ->
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 140.dp),
+            columns = GridCells.Adaptive(minSize = 104.dp),
             contentPadding = PaddingValues(16.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -120,7 +120,7 @@ private fun ThemeCard(theme: QuoteTheme, selected: Boolean, onClick: () -> Unit)
                 text = "Aa",
                 color = Color(theme.textColor),
                 fontFamily = theme.font.toFontFamily(),
-                fontSize = 40.sp,
+                fontSize = 34.sp,
                 textAlign = TextAlign.Center,
             )
             if (selected) {
