@@ -20,7 +20,7 @@ Voraussetzung: Android Studio (aktuelle Version) oder JDK 17+ mit Android SDK.
   2. Pfad zur `.jks`-Datei und die Passwörter eintragen.
   3. Ergebnis: `app/build/outputs/apk/release/app-release.apk`.
 
-  Ohne `keystore.properties` entsteht eine unsignierte APK. Jedes Update muss mit demselben Schlüssel signiert sein, sonst lässt es sich nicht über die installierte Version installieren. `.jks` und Passwörter gehören nie ins Repo.
+  Ohne `keystore.properties` entsteht eine unsignierte APK. Ist die Datei da, aber unvollständig, bricht der Release-Build mit einer Meldung ab, was fehlt. Jedes Update muss mit demselben Schlüssel signiert sein, sonst lässt es sich nicht über die installierte Version installieren. `.jks` und Passwörter gehören nie ins Repo.
 
 ## Aufbau
 

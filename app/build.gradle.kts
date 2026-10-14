@@ -6,14 +6,26 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
-// Signatur für Release-Builds: Pfad und Passwörter stehen in keystore.properties (git-ignoriert,
-// Vorlage: keystore.properties.example). Fehlt die Datei, entsteht eine unsignierte Release-APK.
-val keystoreProperties = Properties().apply {
-    val file = rootProject.file("keystore.properties")
-    if (file.exists()) file.inputStream().use { load(it) }
+// Signatur für Release-Builds: Pfad und Passwörter stehen in keystore.properties im Projektordner
+// (git-ignoriert, Vorlage: keystore.properties.example). Fehlt die Datei, entsteht eine unsignierte
+// Release-APK. Ist sie da, aber unvollständig, bricht nur der Release-Build mit einer Meldung ab.
+val keystoreFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+if (keystoreFile.exists()) {
+    try {
+        // removePrefix: Windows-Editoren setzen gern ein unsichtbares BOM an den Dateianfang.
+        keystoreProperties.load(keystoreFile.readText(Charsets.UTF_8).removePrefix("\uFEFF").reader())
+    } catch (e: IllegalArgumentException) {
+        logger.error(
+            "keystore.properties konnte nicht gelesen werden (${e.message}). " +
+                "Unter Windows / statt \\ im Pfad verwenden, ein \\ im Passwort als \\\\ schreiben.",
+        )
+    }
 }
-val hasReleaseKeystore = listOf("storeFile", "storePassword", "keyAlias", "keyPassword")
-    .all { !keystoreProperties.getProperty(it).isNullOrBlank() }
+fun keystoreValue(key: String): String? = keystoreProperties.getProperty(key)?.trim()?.ifEmpty { null }
+val keystoreKeys = listOf("storeFile", "storePassword", "keyAlias", "keyPassword")
+val missingKeystoreValues = if (keystoreFile.exists()) keystoreKeys.filter { keystoreValue(it) == null } else emptyList()
+val hasReleaseKeystore = keystoreFile.exists() && missingKeystoreValues.isEmpty()
 
 android {
     namespace = "de.motivationcode.app"
@@ -30,10 +42,10 @@ android {
     signingConfigs {
         if (hasReleaseKeystore) {
             create("release") {
-                storeFile = rootProject.file(keystoreProperties.getProperty("storeFile"))
-                storePassword = keystoreProperties.getProperty("storePassword")
-                keyAlias = keystoreProperties.getProperty("keyAlias")
-                keyPassword = keystoreProperties.getProperty("keyPassword")
+                storeFile = rootProject.file(keystoreValue("storeFile")!!)
+                storePassword = keystoreValue("storePassword")
+                keyAlias = keystoreValue("keyAlias")
+                keyPassword = keystoreValue("keyPassword")
                 // v3 erlaubt später einen Schlüsselwechsel, ohne dass Nutzer neu installieren müssen.
                 enableV3Signing = true
             }
@@ -95,4 +107,18 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
+}
+
+// Unvollständige keystore.properties: lieber eine klare Meldung als still eine unsignierte APK.
+// Betrifft nur Release-Builds, Debug-Builds und Tests laufen weiter.
+tasks.matching { it.name == "preReleaseBuild" }.configureEach {
+    val missing = missingKeystoreValues
+    doFirst {
+        if (missing.isNotEmpty()) {
+            throw GradleException(
+                "keystore.properties ist unvollständig, es fehlt: ${missing.joinToString()}. " +
+                    "Vorlage: keystore.properties.example (bei PKCS12-Schlüsseln ist keyPassword = storePassword).",
+            )
+        }
+    }
 }

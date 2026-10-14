@@ -13,4 +13,10 @@
 *.aab
 *.jks
 *.keystore
-/keystore.properties
+# Signatur: Schlüssel und Passwörter nie ins Repo (in jedem Ordner, auch bei falscher Endung)
+keystore.properties
+keystore.properties.*
+!keystore.properties.example
+keystore-passwort.txt
+*.p12
+*.pfx
