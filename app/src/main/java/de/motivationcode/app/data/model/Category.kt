@@ -2,6 +2,7 @@ package de.motivationcode.app.data.model
 
 enum class Category(val id: String, val title: String) {
     MOTIVATION("motivation", "Motivation"),
+    SPORT("sport", "Sportmotivation"),
     MUT("mut", "Mut"),
     DURCHHALTEN("durchhalten", "Schwere Zeiten"),
     GELASSENHEIT("gelassenheit", "Gelassenheit"),

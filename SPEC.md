@@ -17,7 +17,7 @@
 - 12 Themes, Teilen als Bild (PNG, 1080 × 1350)
 - Erinnerungen: 1–10 pro Tag, gleichmäßig zwischen Start und Ende (auch über Mitternacht)
 - Glance-Widget, wechselt alle 3 Stunden oder per Tipp auf ↻
-- 85 kuratierte Zitate, mitgeliefert, offline
+- 131 kuratierte Zitate in 9 Kategorien, mitgeliefert, offline; davon 46 in „Sportmotivation“ (jedes einzeln mit Quelle geprüft)
 - Eigene Zitate (Text + optionaler Autor): Kategorie „Meine Zitate“, zusätzlich in „Alle Zitate“, Widget und Erinnerungen; Verwalten über Kategorien → „Meine Zitate“ → Verwalten; Löschen mit „Rückgängig“
 
 ## Bewusst nicht drin
