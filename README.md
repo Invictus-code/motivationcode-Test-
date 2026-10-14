@@ -12,6 +12,16 @@ Voraussetzung: Android Studio (aktuelle Version) oder JDK 17+ mit Android SDK.
 ./gradlew testDebugUnitTest    # Unit-Tests
 ```
 
+## Debug- und Release-Version
+
+- `./gradlew assembleDebug` baut die Testversion. Sie heißt auf dem Handy „Tagesmotivation Test“, hat die Paket-ID `de.motivationcode.app.debug` und kann neben der Release-Version installiert sein.
+- `./gradlew assembleRelease` baut die verkleinerte Release-Version. Damit sie signiert wird:
+  1. `keystore.properties.example` als `keystore.properties` kopieren (git ignoriert diese Datei).
+  2. Pfad zur `.jks`-Datei und die Passwörter eintragen.
+  3. Ergebnis: `app/build/outputs/apk/release/app-release.apk`.
+
+  Ohne `keystore.properties` entsteht eine unsignierte APK. Jedes Update muss mit demselben Schlüssel signiert sein, sonst lässt es sich nicht über die installierte Version installieren. `.jks` und Passwörter gehören nie ins Repo.
+
 ## Aufbau
 
 ```

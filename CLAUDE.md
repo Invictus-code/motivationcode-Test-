@@ -8,7 +8,7 @@ Android app that shows motivational quotes in German as a full-screen swipe feed
 - Unit tests: ./gradlew testDebugUnitTest
 - Lint: ./gradlew lintDebug
 - Install on device: ./gradlew installDebug
-- Release build (R8 check): ./gradlew assembleRelease
+- Release build (R8 check): ./gradlew assembleRelease (signed only if keystore.properties exists, else app-release-unsigned.apk)
 
 ## Stack (ask before changing)
 - Kotlin, Jetpack Compose, Material 3, Navigation 3
@@ -37,3 +37,5 @@ Android app that shows motivational quotes in German as a full-screen swipe feed
 - Ask before adding a library or changing the architecture.
 - Before saying a task is done: build and run the relevant tests.
 - API keys go into local.properties (git-ignored), never into code.
+- Release signing: keystore.properties (git-ignored, template keystore.properties.example). Never commit keystore.properties or any .jks/.keystore. Every release must be signed with the same key.
+- Debug builds use applicationIdSuffix ".debug" and the name "Tagesmotivation Test" (app/src/debug/res), so they install next to the release app.

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Nur in der Debug-Version: zeigt auf dem Handy, welche App die Testversion ist. -->
+    <string name="app_name">Tagesmotivation Test</string>
+</resources>
